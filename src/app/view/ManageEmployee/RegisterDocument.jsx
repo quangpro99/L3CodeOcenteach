@@ -10,6 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 const RegisterDocument = (props) => {
   const { handleClose } = props;
+  const [listDocument, setListDocument] = useState([]);
 
   const formik = useFormik({
     initialValues: {
