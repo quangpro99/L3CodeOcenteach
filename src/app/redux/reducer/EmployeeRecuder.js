@@ -2,6 +2,7 @@ import { ActionTypes } from '../actions/actionType';
 
 const initialState = {
   listEmployee: [],
+  listPromote: [],
   employeeData: {
     employeeInfo: {},
     certificates: [],
@@ -25,6 +26,16 @@ export default (state = initialState, action) => {
     }
     case ActionTypes.GET_LIST_EMPLOYEE_FAILED: {
       return { ...state, listEmployee: action.payload.errors, loading: false };
+    }
+
+    case ActionTypes.GET_LIST_PROMOTE: {
+      return { ...state };
+    }
+    case ActionTypes.GET_LIST_PROMOTE_SUCCESS: {
+      return { ...state, listPromote: action.payload.res.data.data };
+    }
+    case ActionTypes.GET_LIST_PROMOTE_FAILED: {
+      return { ...state, listPromote: action.payload.errors };
     }
 
     case ActionTypes.DELETE_EMPLOYEE: {

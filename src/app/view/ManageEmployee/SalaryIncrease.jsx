@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import MaterialTable from '@material-table/core';
 import { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { toast } from "react-toastify";
 
 const SalaryIncrease = (props) => {
   const { handleClose } = props;
@@ -29,11 +30,11 @@ const SalaryIncrease = (props) => {
       if (!values.id) {
         values.id = uuidv4();
         setListSalary([...listSalary, values]);
-        // toast.success('Thêm thành công');
+        toast.success('Thêm thành công');
       } else {
         const newListFilter = listSalary.filter((Salary) => Salary.id !== values.id);
         setListSalary([...newListFilter, values]);
-        // toast.success('Sửa thành công');
+        toast.success('Sửa thành công');
       }
       resetForm();
     },

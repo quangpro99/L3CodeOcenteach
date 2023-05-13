@@ -112,3 +112,42 @@ export const totalEmployeeCountSuccess = ({ res }) => {
 export const totalEmployeeCountFailed = ({ errors }) => {
   return { type: ActionTypes.TOTAL_EMPLOYEE_COUNT_FAILED, payload: { errors } };
 };
+
+//add promote
+export const addPromote = (object) =>{
+  return {type: ActionTypes.ADD_PROMOTE, payload: object}
+}
+
+export const addPromoteSuccess = ({res}) =>{
+  return {type: ActionTypes.ADD_PROMOTE_SUCCESS, payload: {res}}
+}
+
+export const addPromoteFailed = ({ errors }) =>{
+  return {type: ActionTypes.ADD_PROMOTE_FAILED, payload: {errors}}
+}
+
+//list promote
+export const getListPromote = (payload) =>{
+  return {type: ActionTypes.GET_LIST_PROMOTE, payload: payload}
+}
+
+export const listPromoteSuccess = ({res}) =>{
+  return {type: ActionTypes.GET_LIST_PROMOTE_SUCCESS, payload: {res}}
+}
+
+export const listPromoteFailed = ({ errors }) =>{
+  return {type: ActionTypes.GET_LIST_PROMOTE_FAILED, payload: {errors}}
+}
+
+//delete promote
+export const deletePromote = (payload) =>{
+  return {type: ActionTypes.DELETE_PROMOTE, payload: payload}
+}
+
+export const deletePromoteSuccess = ({res}) =>{
+  return {type: ActionTypes.DELETE_PROMOTE_SUCCESS, payload: {res}}
+}
+
+export const deletePromoteFailed = ({ errors }) =>{
+  return {type: ActionTypes.DELETE_PROMOTE_FAILED, payload: {errors}}
+}
