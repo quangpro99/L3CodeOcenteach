@@ -105,3 +105,30 @@ export const totalEmployee = async (type) => {
     },
   });
 };
+
+//add promote
+export const addPromote = async (id, object) => {
+  return await axios.post(API_EMPLOYEE + '/' + id + '/promote?page=1&size=5', object, {
+    headers: {
+      Authorization: TOKEN,
+    },
+  });
+};
+
+//get promote
+export const getListPromote = async (id) => {
+  return await axios.get(API_EMPLOYEE + '/' + id + '/promote?page=1&size=5', {
+    headers: {
+      Authorization: TOKEN,
+    },
+  });
+};
+
+//delete promote
+export const deletePromote = async (id) => {
+  return await axios.delete(API_EMPLOYEE + '/promote/' + id, {
+    headers: {
+      Authorization: TOKEN,
+    },
+  });
+};

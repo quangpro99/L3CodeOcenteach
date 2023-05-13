@@ -8,6 +8,9 @@ import {
   getEmployeeById,
   totalEmployee,
   putEmployee,
+  addPromote,
+  getListPromote,
+  deletePromote,
 } from '~/Services/AddEmployeeServices';
 import { call, put } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
@@ -25,8 +28,13 @@ import {
   getDetailSuccess,
   totalEmployeeCountSuccess,
   totalEmployeeCountFailed,
-  putEmployeeSuccess,
   putEmployeeFailed,
+  addPromoteSuccess,
+  addPromoteFailed,
+  listPromoteSuccess,
+  listPromoteFailed,
+  deletePromoteSuccess,
+  deletePromoteFailed,
 } from '../actions/employeeActions';
 
 //list employee
@@ -174,6 +182,52 @@ function* getDetail(payload) {
   }
 }
 
+//add promote
+function* addPromoteSaga(payload) {
+  try {
+    const res = yield call(addPromote,payload.payload.id ,payload.payload.listPromote);
+    if (res.data.code === 200) {
+      yield put(addPromoteSuccess({ res: res }));
+      yield getListPromoteSaga({payload:{id: payload.payload.id}})
+      toast.success('Đã thêm thao tác thăng chức');
+    } else {
+      toast.error('Không thể thực hiện thao tác thăng chức');
+    }
+  } catch (error) {
+    yield put(addPromoteFailed({ errors: error }));
+  }
+}
+
+//get list promote
+function* getListPromoteSaga(payload) {
+  try {
+    const res = yield call(getListPromote,payload.payload.id);
+    if (res.data.code === 200) {
+      yield put(listPromoteSuccess({ res: res }));
+    } else {
+      toast.error('Không thể lấy được dữ liệu thăng chức');
+    }
+  } catch (error) {
+    yield put(listPromoteFailed({ errors: error }));
+  }
+}
+
+//delete promote
+function* deletePromoteSaga(payload) {
+  try {
+    const res = yield call(deletePromote,payload.payload.id);
+    if (res.data.code === 200) {
+      yield put(deletePromoteSuccess({ res: res }));
+      yield getListPromoteSaga({payload:{id: payload.payload.idListPromote}})
+      toast.success('Đã xóa thành công');
+    } else {
+      toast.error('Xóa lỗi !!!');
+    }
+  } catch (error) {
+    yield put(deletePromoteFailed({ errors: error }));
+  }
+}
+
 export {
   getListEmployeeSaga,
   deleteEmployeeSaga,
@@ -183,4 +237,7 @@ export {
   getDetail,
   getTotalEmployeeSaga,
   putEmployeeSaga,
+  addPromoteSaga,
+  getListPromoteSaga,
+  deletePromoteSaga
 };

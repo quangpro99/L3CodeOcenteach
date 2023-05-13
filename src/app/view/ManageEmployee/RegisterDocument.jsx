@@ -1,55 +1,65 @@
-import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import { TextField, Grid, Button, Icon, Tooltip, IconButton } from '@mui/material';
-import MaterialTable from '@material-table/core';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { ToastContainer, toast } from 'react-toastify';
-
-const RegisterDocument = (props) => {
-  const { handleClose } = props;
-
+import React from "react";
+import { v4 as uuidv4 } from "uuid";
+import { TextField, Grid, Button, Icon, Tooltip, IconButton } from "@mui/material";
+import MaterialTable from "@material-table/core";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useState } from "react";
+import { toast } from "react-toastify";
+function RegisterDocument(props) {
   const formik = useFormik({
     initialValues: {
-      content: '',
-      document: '',
-      note: '',
-      date: '',
+      content: "",
+      document: "",
+      note: "",
+      date: "",
     },
     validationSchema: Yup.object({
       content: Yup.string()
-        .min(5, 'Hãy nhập đầy đủ nội dung ')
-        .max(30, 'Nhập nội dung đúng định dạng')
-        .required('Không được bỏ trống'),
+        .min(5, "Hãy nhập đầy đủ nội dung ")
+        .max(30, "Nhập nội dung đúng định dạng")
+        .required("Không được bỏ trống"),
       document: Yup.string()
-        .min(5, 'Hãy nhập đầy đủ nội dung ')
-        .max(30, 'Nhập nội dung đúng định dạng')
-        .required('Không được bỏ trống'),
+        .min(5, "Hãy nhập đầy đủ nội dung ")
+        .max(30, "Nhập nội dung đúng định dạng")
+        .required("Không được bỏ trống"),
       note: Yup.string()
-        .min(5, 'Hãy nhập đầy đủ nội dung ')
-        .max(30, 'Nhập nội dung đúng định dạng')
-        .required('Không được bỏ trống'),
-      date: Yup.date().required('Vui lòng nhập ngày'),
+        .min(5, "Hãy nhập đầy đủ nội dung ")
+        .max(30, "Nhập nội dung đúng định dạng")
+        .required("Không được bỏ trống"),
+      date: Yup.date().required("Vui lòng nhập ngày"),
     }),
     onSubmit: (values, { resetForm }) => {
-      //   if (!values.id) {
-      //     values.id = uuidv4();
-      //     setListDocument([...listDocument, values]);
-      //     toast.success('Thêm thành công');
-      //   } else {
-      //     const newListFilter = listDocument.filter((document) => document.id != values.id);
-      //     setListDocument([...newListFilter, values]);
-      //     toast.success('Sửa thành công');
-      //   }
-      //   resetForm();
+      if (!values.id) {
+        values.id = uuidv4();
+        setListDocument([...listDocument, values]);
+        toast.success("Thêm thành công");
+      } else {
+        const newListFilter = listDocument.filter((document) => document.id !== values.id);
+        setListDocument([...newListFilter, values]);
+        toast.success("Sửa thành công");
+      }
+      resetForm();
     },
   });
 
+  const { handleClose } = props;
+  const [listDocument, setListDocument] = useState([]);
+
+  const handleEditDocument = (rowData) => {
+    formik.setValues(rowData);
+  };
+  const handleRemoveDocument = (rowData) => {
+    const newListFilter = listDocument.filter((document) => document.id !== rowData.id);
+    setListDocument([...newListFilter]);
+    toast.success("Xóa thành công");
+  };
+  const handleSave = () => {
+    toast.success("Lưu thành công");
+  };
   const columns = [
     {
-      title: 'Hành động',
+      title: "Hành động",
       render: (rowData) => {
         return (
           <>
@@ -57,7 +67,7 @@ const RegisterDocument = (props) => {
               <IconButton
                 color="primary"
                 onClick={() => {
-                  //   handleEditDocument(rowData);
+                  handleEditDocument(rowData);
                 }}
               >
                 <Icon>edit</Icon>
@@ -67,7 +77,7 @@ const RegisterDocument = (props) => {
               <IconButton
                 color="error"
                 onClick={() => {
-                  //   handleRemoveDocument(rowData);
+                  handleRemoveDocument(rowData);
                 }}
               >
                 <Icon>delete</Icon>
@@ -77,13 +87,12 @@ const RegisterDocument = (props) => {
         );
       },
     },
-    { title: 'Hồ sơ', field: 'document' },
+    { title: "Hồ sơ", field: "document" },
 
-    { title: 'Nội dung', field: 'content' },
-    { title: 'Ngày đăng kí', field: 'date' },
-    { title: 'Ghi chú', field: 'note' },
+    { title: "Nội dung", field: "content" },
+    { title: "Ngày đăng kí", field: "date" },
+    { title: "Ghi chú", field: "note" },
   ];
-
   return (
     <form onSubmit={formik.handleSubmit}>
       <Grid container spacing={2} pt={1}>
@@ -144,7 +153,7 @@ const RegisterDocument = (props) => {
           </Grid>
           <Grid container item xs={3} spacing={1}>
             <Grid item>
-              <Button variant="contained" sx={{ background: '#FF9E43' }} onClick={handleClose}>
+              <Button variant="contained" sx={{ background: "#FF9E43" }} onClick={handleClose}>
                 Hủy
               </Button>
             </Grid>
@@ -153,10 +162,7 @@ const RegisterDocument = (props) => {
                 Thêm
               </Button>
             </Grid>
-            <Grid
-              item
-              // onClick={handleSave}
-            >
+            <Grid item onClick={handleSave}>
               <Button variant="contained" color="primary">
                 Lưu
               </Button>
@@ -165,24 +171,24 @@ const RegisterDocument = (props) => {
         </Grid>
         <Grid item xs={12}>
           <MaterialTable
-            title={''}
-            data={[]}
+            title={""}
+            data={listDocument}
             columns={columns}
             options={{
               pageSize: 5,
               pageSizeOptions: [5, 10, 15, 20],
               rowStyle: (rowData, index) => {
                 return {
-                  backgroundColor: index % 2 === 1 ? '#EEE' : '#FFF',
+                  backgroundColor: index % 2 === 1 ? "#EEE" : "#FFF",
                 };
               },
-              maxBodyHeight: '1000px',
-              minBodyHeight: '370px',
+              maxBodyHeight: "1000px",
+              minBodyHeight: "370px",
               headerStyle: {
-                backgroundColor: '#262e49',
-                color: '#fff',
+                backgroundColor: "#262e49",
+                color: "#fff",
               },
-              padding: 'default',
+              padding: "default",
               toolbar: false,
             }}
           />
@@ -190,6 +196,6 @@ const RegisterDocument = (props) => {
       </Grid>
     </form>
   );
-};
+}
 
 export default RegisterDocument;

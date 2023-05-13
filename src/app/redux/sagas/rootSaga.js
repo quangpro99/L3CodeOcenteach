@@ -9,6 +9,9 @@ import {
   getDetail,
   getTotalEmployeeSaga,
   putEmployeeSaga,
+  addPromoteSaga,
+  getListPromoteSaga,
+  deletePromoteSaga
 } from './EmployeeSaga';
 
 export default function* rootSaga() {
@@ -20,4 +23,7 @@ export default function* rootSaga() {
   yield takeLatest(ActionTypes.GET_DETAIL, getDetail);
   yield takeLatest(ActionTypes.TOTAL_EMPLOYEE_COUNT, getTotalEmployeeSaga);
   yield takeLatest(ActionTypes.UPDATE_EMPLOYEE, putEmployeeSaga);
+  yield takeLatest(ActionTypes.ADD_PROMOTE, addPromoteSaga);
+  yield takeLatest(ActionTypes.GET_LIST_PROMOTE, getListPromoteSaga);
+  yield takeLatest(ActionTypes.DELETE_PROMOTE, deletePromoteSaga)
 }
